@@ -47,5 +47,38 @@ export default class runCommands {
     this.commands = data.split('\n').filter( command => command !== '');
     return this.commands;
   }
+ /*
+  Method for running a single command
+  The Method takes a single command as a string
+  The Method does not return anything
+  */
+  RunCommand = (command: string) =>{
+
+    // Split based on either space or comma
+    const temp = command.split(/[\s,]+/);
+    const action = temp[0];
+    const arg = temp.slice(1);
+    if(!this.actionMap[action.toLocaleLowerCase()]){
+      console.log(`${action} is not a valid command`)
+      return;
+    }
+    else if(this.print){
+      console.log(command)
+    }
+    if(action.toLocaleLowerCase() === 'place'){
+      if(arg.length !== 3)
+        console.log(`${action} takes 3 arguments, ${arg.length} is given`)
+      else
+        this.actionMap[action.toLocaleLowerCase()]({X: parseInt(arg[0]), Y: parseInt(arg[1]), F: arg[2]})
+    }
+    else if(action.toLocaleLowerCase() === 'report'){
+      const RESULT = this.actionMap[action.toLocaleLowerCase()]()
+      if(RESULT.valid)
+        console.log(`X: ${RESULT.position.X} Y: ${RESULT.position.Y} F: ${RESULT.position.F}`)
+    }
+    else
+      this.actionMap[action.toLocaleLowerCase()]()
+  }
+
 
 } // End of class
