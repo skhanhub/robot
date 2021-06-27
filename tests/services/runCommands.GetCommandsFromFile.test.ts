@@ -1,12 +1,24 @@
 import * as path from "path";
 import RunCommands from '../../src/services/runCommands';
 
+jest.mock("fs", () => ({
+  promises: {
+    readFile: jest.fn().mockResolvedValue(`
+      PLACE 0,0,NORTH
+      MOVE
+      REPORT
+      LEFT
+      MOVE
+      REPORT
+    `.replace(/^ +| +$/gm, "")), // removes whitespaces but keeps new line
+  },
+}));
+
 describe('Tests for the GetCommandsFromFile method for the RunCommands class', () => {
 
   test('Should return all the commands from the given file', async () => {
 
     //Arrange
-    expect.assertions(1);
     const COMMANDS = [
       'PLACE 0,0,NORTH',
       'MOVE',
@@ -22,7 +34,7 @@ describe('Tests for the GetCommandsFromFile method for the RunCommands class', (
 
     //Assert
     expect(RESULT).toEqual(COMMANDS);
-
+    expect.assertions(1);
   });
 
 })
