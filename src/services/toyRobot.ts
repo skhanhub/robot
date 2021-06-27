@@ -125,5 +125,45 @@ export default class ToyRobot {
       position: this.position,
     };
   }
+ /*
+  Method for rotating the robot 90 degrees to the left (anticlockwise)
+  The Method does not take any argument
+  The Method returns a ReturnPosition object
+  */
+  Left = (): ReturnPosition => {
+
+    if(!this.valid)
+      return {
+        valid: this.valid,
+        position: this.position,
+      };
+    // Look up the new face for a left rotation (F) from the lookup table
+    this.position.F = this.directionLookUp[this.position.F.toLocaleLowerCase()].Left
+
+    return {
+      valid: this.valid,
+      position: this.position,
+    };
+  }
+  /*
+  Method for rotating the robot 90 degrees to the right (clockwise)
+  The Method does not take any argument
+  The Method returns a ReturnPosition object
+  */
+  Right = (): ReturnPosition => {
+
+    if(!this.valid)
+      return {
+        valid: this.valid,
+        position: this.position,
+      };
+    // Look up the new face for a right rotation (F) from the lookup table
+    this.position.F = this.directionLookUp[this.position.F.toLocaleLowerCase()].Right
+
+    return {
+      valid: this.valid,
+      position: this.position,
+    };
+  }
 
 }// End Class
