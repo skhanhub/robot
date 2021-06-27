@@ -14,9 +14,11 @@ type ReturnPosition = {
   position: Position
 }
 
-export default class runCommands {
+const radix = 10;
+
+export default class RunCommands {
   toyRobot: ToyRobot;
-  commands: Array<string>;
+  commands: string[];
   actionMap: ActionMap;
   print: boolean;
 
@@ -27,14 +29,14 @@ export default class runCommands {
     this.print = print;
     this.actionMap = toyRobot.GetActionMap();
   }
-  //Method for setting an array of commands
-  SetCommands = (commands: Array<string>) => this.commands = commands;
+  // Method for setting an array of commands
+  SetCommands = (commands: string[]) => this.commands = commands;
   /*
   Method for reading the commands for the robot from a file
   The Method takes the path to a file as the argument
   The Method returns the commands as an array
   */
-  GetCommandsFromFile = async (path: string): Promise<Array<string>> => {
+  GetCommandsFromFile = async (path: string): Promise<string[]> => {
 
     console.log(`Reading commands from ${path}`)
     const data: string = await promises.readFile(path, 'utf8');
@@ -69,7 +71,7 @@ export default class runCommands {
       if(arg.length !== 3)
         console.log(`${action} takes 3 arguments, ${arg.length} is given`)
       else
-        this.actionMap[action.toLocaleLowerCase()]({X: parseInt(arg[0]), Y: parseInt(arg[1]), F: arg[2]})
+        this.actionMap[action.toLocaleLowerCase()]({X: parseInt(arg[0], radix), Y: parseInt(arg[1], radix), F: arg[2]})
     }
     else if(action.toLocaleLowerCase() === 'report'){
       const RESULT = this.actionMap[action.toLocaleLowerCase()]()

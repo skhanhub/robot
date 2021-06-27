@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "tsc": "tsc",
-    "eslint": "eslint",
+    "tslint": "tslint",
     "test": "jest",
     "coverage": "jest --coverage",
     "build": "tsc",

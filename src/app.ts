@@ -1,4 +1,4 @@
-//This file contains the top level application
+// This file contains the top level application
 import { join } from "path";
 import { existsSync } from 'fs';
 import RunCommands from './services/runCommands';
@@ -6,7 +6,7 @@ import configs from "../config";
 
 // Get file path from the arguments
 const PATH_TO_COMMAND_FILE = process.argv[2];
-const CONFIG = configs['production'];
+const CONFIG = configs.production;
 const VALID_EXIT_COMMANDS = ['exit', 'e', 'quit', 'q'];
 const INSTRUCTION = `
 Valid commands for the robot are,
@@ -48,10 +48,10 @@ const runCommandsFromTerminal = () => {
 
   const STDIN = process.openStdin();
   // Add a listner to the terminal for reading commands
-  STDIN.addListener("data", function(input) {
+  STDIN.addListener("data", input => {
 
     const COMMAND = input.toString().trim().toLocaleLowerCase();
-    //Exit if a valid exit command entered
+    // Exit if a valid exit command entered
     if(VALID_EXIT_COMMANDS.includes(COMMAND)){
       console.log('Goodbye!')
       process.exit();
@@ -60,7 +60,8 @@ const runCommandsFromTerminal = () => {
     runCommands.RunCommand(COMMAND);
   });
 }
-// If a file path provided as an argument then run the commands from the file. Otherwise, run the commands from the terminal.
+// If a file path provided as an argument then run the commands from the file.
+// Otherwise, run the commands from the terminal.
 if(PATH_TO_COMMAND_FILE){
   runCommandsFromFile(PATH_TO_COMMAND_FILE);
 }
