@@ -165,5 +165,16 @@ export default class ToyRobot {
       position: this.position,
     };
   }
+  /*
+  Method getting the current position of the robot
+  The Method does not take any argument
+  The Method returns a ReturnPosition object
+  */
+  Report = (): ReturnPosition => (
+    {
+      valid: this.valid,
+      position: this.position,
+    }
+  )
 
 }// End Class
