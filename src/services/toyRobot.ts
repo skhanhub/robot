@@ -57,5 +57,16 @@ export default class ToyRobot {
     this.valid = valid;
     this.dimention = dimention;
   }
+  /*
+  Method for validating a potential robot position
+  The Method takes a position object
+  The Method returns a boolean
+  */
+  private Validate = (position: Position): boolean =>{
+
+    return position.X <= this.dimention - 1 && position.X >= 0 &&
+      position.Y <= this.dimention - 1 && position.Y >= 0 &&
+      this.directionLookUp[position.F.toLocaleLowerCase()] !== undefined
+  }
 
 }// End Class
