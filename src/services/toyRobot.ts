@@ -93,5 +93,37 @@ export default class ToyRobot {
       position: this.position,
     };
   }
+  /*
+  Method for moving the robot
+  The Method does not take any argument
+  The Method returns a ReturnPosition object
+  */
+  Move = (): ReturnPosition => {
+
+    if(!this.valid)
+      return {
+        valid: this.valid,
+        position: this.position,
+      };
+
+    const NEW_POSITION = {...this.position};
+    NEW_POSITION.X = NEW_POSITION.X + this.directionLookUp[NEW_POSITION.F.toLocaleLowerCase()].X;
+    NEW_POSITION.Y = NEW_POSITION.Y + this.directionLookUp[NEW_POSITION.F.toLocaleLowerCase()].Y;
+
+    if(!this.Validate(NEW_POSITION)){
+      console.log('The robot cannot move any further. Otherwise, it will fall off the table. Try a different direction.')
+      return {
+        valid: false,
+        position: this.position,
+      };
+    }
+
+    this.position = NEW_POSITION;
+
+    return {
+      valid: this.valid,
+      position: this.position,
+    };
+  }
 
 }// End Class
