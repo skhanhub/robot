@@ -39,3 +39,32 @@ const runCommandsFromFile = async (pathToCommandFile: string) => {
   await runCommands.GetCommandsFromFile(ABSOLUTEPATH)
   runCommands.RunCommands();
 }
+/*
+  Function for running a set of commands from the terminal
+  The function does not take any arguments
+  The function does not return anything
+*/
+const runCommandsFromTerminal = () => {
+
+  const STDIN = process.openStdin();
+  // Add a listner to the terminal for reading commands
+  STDIN.addListener("data", function(input) {
+
+    const COMMAND = input.toString().trim().toLocaleLowerCase();
+    //Exit if a valid exit command entered
+    if(VALID_EXIT_COMMANDS.includes(COMMAND)){
+      console.log('Goodbye!')
+      process.exit();
+    }
+
+    runCommands.RunCommand(COMMAND);
+  });
+}
+// If a file path provided as an argument then run the commands from the file. Otherwise, run the commands from the terminal.
+if(PATH_TO_COMMAND_FILE){
+  runCommandsFromFile(PATH_TO_COMMAND_FILE);
+}
+else{
+  console.log(INSTRUCTION);
+  runCommandsFromTerminal();
+}
