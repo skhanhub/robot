@@ -111,8 +111,7 @@ export default class ToyRobot {
     NEW_POSITION.Y = NEW_POSITION.Y + this.directionLookUp[NEW_POSITION.F.toLocaleLowerCase()].Y;
 
     if(!this.Validate(NEW_POSITION)){
-      console.log(`The robot cannot move any further.
-      Otherwise, it will fall off the table. Try a different direction.`)
+      console.log(`The robot cannot move any further. Otherwise, it will fall off the table. Try a different direction.`)
       return {
         valid: false,
         position: this.position,
