@@ -79,6 +79,21 @@ export default class runCommands {
     else
       this.actionMap[action.toLocaleLowerCase()]()
   }
-
-
+ /*
+  Method for running a list of commands
+  The Method does not take any arguments
+  The Method returns the final position of the robot as a ReturnPosition object
+  */
+  RunCommands = (): ReturnPosition => {
+    if(this.commands === []){
+      console.log('No commands found')
+      return this.toyRobot.Report();
+    }
+    this.commands.forEach(command => {
+      this.RunCommand(command);
+    });
+    return this.toyRobot.Report()
+  }
+  // Method for toggling the print property
+  togglePrint = () => this.print = !this.print;
 } // End of class
