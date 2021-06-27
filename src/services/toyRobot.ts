@@ -176,5 +176,19 @@ export default class ToyRobot {
       position: this.position,
     }
   )
-
+  /*
+  Method getting a hashmap with the keys being the action name and the values are the methods
+  The Method does not take any argument
+  The Method returns an object
+  */
+  GetActionMap = (): ActionMap =>
+  {
+    return {
+      place: this.Place,
+      move: this.Move,
+      left: this.Left,
+      right: this.Right,
+      report: this.Report,
+    }
+  }// End GetActionMap
 }// End Class
