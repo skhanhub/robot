@@ -1,7 +1,6 @@
 {
-  "author": "Shahriar Hasan Khan",
   "name": "toy-robot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An application for simulating a robot",
   "main": "./src/app.ts",
   "private": true,
