@@ -69,4 +69,29 @@ export default class ToyRobot {
       this.directionLookUp[position.F.toLocaleLowerCase()] !== undefined
   }
 
+  /*
+  Method for placing the robot on the tabletop
+  The Method takes a position object
+  The Method returns a ReturnPosition object
+  */
+  Place = (position: Position = defaultPosition): ReturnPosition => {
+
+    if(!this.Validate(position)){
+      console.log(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimention-1} and F is either North, South, East, West`)
+      return{
+        valid: this.valid,
+        position: this.position,
+      };
+    }
+
+    position.F = position.F[0].toUpperCase()+position.F.slice(1).toLocaleLowerCase();
+    this.position = position;
+    this.valid = true
+
+    return {
+      valid: this.valid,
+      position: this.position,
+    };
+  }
+
 }// End Class
