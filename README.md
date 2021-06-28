@@ -1,4 +1,4 @@
-# robot-simulator
+# robot
 
 This project simulation of a toy robot moving on a square tabletop, of dimensions five units by five units. There are no other obstructions on the table surface. The robot is free to roam around the surface of the table but will be prevented from falling to destruction. Any movement that would result in the robot falling from the table will be restricted, however further valid movement commands will be allowed.
 
