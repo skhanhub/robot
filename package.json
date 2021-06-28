@@ -3,7 +3,8 @@
   "version": "1.0.1",
   "description": "An application for simulating a robot",
   "main": "./src/app.ts",
-  "private": true,
+  "author": "Shahriar Hasan Khan",
+  "private": false,
   "scripts": {
     "tsc": "tsc",
     "tslint": "tslint",
