@@ -82,3 +82,6 @@ The coverage reports will be in the `coverage` folder
 ## FAQ
 
 ## Credits
+
+Written by Shahriar Hasan Khan
+Contact: shahriar27@hotmail.com
