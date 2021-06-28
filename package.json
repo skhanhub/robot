@@ -8,7 +8,7 @@
   "scripts": {
     "tsc": "tsc",
     "tslint": "tslint",
-    "test": "jest",
+    "test": "jest --silent",
     "coverage": "jest --coverage",
     "build": "tsc",
     "build:watch": "tsc --w",
