@@ -1,5 +1,5 @@
 import * as path from "path";
-import Orchestrator from '../../src/services/orchestrator';
+import GetCommands from "../../src/services/getCommands";
 
 jest.mock("fs", () => ({
   promises: {
@@ -27,10 +27,9 @@ describe('Tests for the GetCommandsFromFile method for the RunCommands class', (
       'MOVE',
       'REPORT',
     ]
-    const runCommands = new Orchestrator();
 
     //Act
-    const RESULT = await runCommands.GetCommandsFromFile(path.join(__dirname, '../commands/testCommands.txt'));
+    const RESULT = await GetCommands.FromFile(path.join(__dirname, '../commands/testCommands.txt'));
 
     //Assert
     expect(RESULT).toEqual(COMMANDS);
