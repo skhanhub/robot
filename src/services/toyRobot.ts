@@ -37,7 +37,7 @@ export const defaultPosition = {
 }
 
 export const defaultValid = false;
-export const defaultDimention = 5;
+export const defaultDimension = 5;
 
 export const defaultDirectionLookUp = {
   north: {X: 0, Y: 1, Left: 'West', Right: 'East'},
@@ -51,18 +51,18 @@ export default class ToyRobot {
   directionLookUp: LookUp;
   position: Position;
   valid: boolean;
-  dimention: number;
+  dimension: number;
 
   constructor(
     directionLookUp = defaultDirectionLookUp,
     position = defaultPosition,
     valid = defaultValid,
-    dimention = defaultDimention,
+    dimension = defaultDimension,
   ){
     this.directionLookUp = directionLookUp;
     this.position = position;
     this.valid = valid;
-    this.dimention = dimention;
+    this.dimension = dimension;
   }
   /*
   Method for validating a potential robot position
@@ -71,8 +71,8 @@ export default class ToyRobot {
   */
   private Validate = (position: Position): boolean =>{
 
-    return position.X <= this.dimention - 1 && position.X >= 0 &&
-      position.Y <= this.dimention - 1 && position.Y >= 0 &&
+    return position.X <= this.dimension - 1 && position.X >= 0 &&
+      position.Y <= this.dimension - 1 && position.Y >= 0 &&
       this.directionLookUp[position.F.toLocaleLowerCase()] !== undefined
   }
 
@@ -84,7 +84,7 @@ export default class ToyRobot {
   Place = (position: Position = defaultPosition): ReturnPosition => {
 
     if(!this.Validate(position)){
-      throw new ToyRobotError(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimention-1} and F is either North, South, East, West`, INVALID_POSITION);
+      throw new ToyRobotError(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimension-1} and F is either North, South, East, West`, INVALID_POSITION);
     }
 
     position.F = position.F[0].toUpperCase()+position.F.slice(1).toLocaleLowerCase();
