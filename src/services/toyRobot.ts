@@ -1,4 +1,6 @@
 // This file contains the ToyRobot class
+import ToyRobotError, { INVALID_MOVE, INVALID_POSITION } from "./toyRobotError"
+
 export type LookUpDetails = {
   X: number,
   Y: number,
@@ -34,28 +36,33 @@ export const defaultPosition = {
   F: 'North',
 }
 
+export const defaultValid = false;
+export const defaultDimension = 5;
+
+export const defaultDirectionLookUp = {
+  north: {X: 0, Y: 1, Left: 'West', Right: 'East'},
+  south: {X: 0, Y: -1, Left: 'East', Right: 'West'},
+  east: {X: 1, Y: 0, Left: 'North', Right: 'South'},
+  west: {X: -1, Y: 0, Left: 'South', Right: 'North'},
+}
+
 // Class for simulating a toy robot
 export default class ToyRobot {
   directionLookUp: LookUp;
   position: Position;
   valid: boolean;
-  dimention: number;
+  dimension: number;
 
   constructor(
-    directionLookUp = {
-      north: {X: 0, Y: 1, Left: 'West', Right: 'East'},
-      south: {X: 0, Y: -1, Left: 'East', Right: 'West'},
-      east: {X: 1, Y: 0, Left: 'North', Right: 'South'},
-      west: {X: -1, Y: 0, Left: 'South', Right: 'North'},
-    },
+    directionLookUp = defaultDirectionLookUp,
     position = defaultPosition,
-    valid = false,
-    dimention = 5
+    valid = defaultValid,
+    dimension = defaultDimension,
   ){
     this.directionLookUp = directionLookUp;
     this.position = position;
     this.valid = valid;
-    this.dimention = dimention;
+    this.dimension = dimension;
   }
   /*
   Method for validating a potential robot position
@@ -64,8 +71,8 @@ export default class ToyRobot {
   */
   private Validate = (position: Position): boolean =>{
 
-    return position.X <= this.dimention - 1 && position.X >= 0 &&
-      position.Y <= this.dimention - 1 && position.Y >= 0 &&
+    return position.X <= this.dimension - 1 && position.X >= 0 &&
+      position.Y <= this.dimension - 1 && position.Y >= 0 &&
       this.directionLookUp[position.F.toLocaleLowerCase()] !== undefined
   }
 
@@ -77,21 +84,14 @@ export default class ToyRobot {
   Place = (position: Position = defaultPosition): ReturnPosition => {
 
     if(!this.Validate(position)){
-      console.log(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimention-1} and F is either North, South, East, West`)
-      return{
-        valid: this.valid,
-        position: this.position,
-      };
+      throw new ToyRobotError(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimension-1} and F is either North, South, East, West`, INVALID_POSITION);
     }
 
     position.F = position.F[0].toUpperCase()+position.F.slice(1).toLocaleLowerCase();
     this.position = position;
     this.valid = true
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
   /*
   Method for moving the robot
@@ -101,29 +101,19 @@ export default class ToyRobot {
   Move = (): ReturnPosition => {
 
     if(!this.valid)
-      return {
-        valid: this.valid,
-        position: this.position,
-      };
+      return this.GetPosition();
 
     const NEW_POSITION = {...this.position};
     NEW_POSITION.X = NEW_POSITION.X + this.directionLookUp[NEW_POSITION.F.toLocaleLowerCase()].X;
     NEW_POSITION.Y = NEW_POSITION.Y + this.directionLookUp[NEW_POSITION.F.toLocaleLowerCase()].Y;
 
     if(!this.Validate(NEW_POSITION)){
-      console.log(`The robot cannot move any further. Otherwise, it will fall off the table. Try a different direction.`)
-      return {
-        valid: false,
-        position: this.position,
-      };
+      throw new ToyRobotError(`The robot cannot move any further. Otherwise, it will fall off the table. Try a different direction.`, INVALID_MOVE);
     }
 
     this.position = NEW_POSITION;
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
  /*
   Method for rotating the robot 90 degrees to the left (anticlockwise)
@@ -133,17 +123,11 @@ export default class ToyRobot {
   Left = (): ReturnPosition => {
 
     if(!this.valid)
-      return {
-        valid: this.valid,
-        position: this.position,
-      };
+      return this.GetPosition();
     // Look up the new face for a left rotation (F) from the lookup table
     this.position.F = this.directionLookUp[this.position.F.toLocaleLowerCase()].Left
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
   /*
   Method for rotating the robot 90 degrees to the right (clockwise)
@@ -153,24 +137,18 @@ export default class ToyRobot {
   Right = (): ReturnPosition => {
 
     if(!this.valid)
-      return {
-        valid: this.valid,
-        position: this.position,
-      };
+      return this.GetPosition();
     // Look up the new face for a right rotation (F) from the lookup table
     this.position.F = this.directionLookUp[this.position.F.toLocaleLowerCase()].Right
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
   /*
   Method getting the current position of the robot
   The Method does not take any argument
   The Method returns a ReturnPosition object
   */
-  Report = (): ReturnPosition => (
+  GetPosition = (): ReturnPosition => (
     {
       valid: this.valid,
       position: this.position,
@@ -188,7 +166,7 @@ export default class ToyRobot {
       move: this.Move,
       left: this.Left,
       right: this.Right,
-      report: this.Report,
+      report: this.GetPosition,
     }
   }// End GetActionMap
 }// End Class

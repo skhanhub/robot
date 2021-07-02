@@ -14,7 +14,7 @@ describe('Tests for the Report method for the ToyRobot class', () => {
     }
 
     //Act
-    const RESULT = toyRobot.Report();
+    const RESULT = toyRobot.GetPosition();
 
     //Assert
     expect(RESULT.valid).toBeFalsy();

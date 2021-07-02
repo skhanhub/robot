@@ -25,7 +25,7 @@ describe('Tests for the Place method for the ToyRobot class', () => {
 
 
 
-  test('Should return an object with valid set to false if invalid X is passed', () => {
+  test('Should throw an error if invalid X is passed', () => {
 
     //Arrange
     const toyRobot = new ToyRobot();
@@ -35,15 +35,11 @@ describe('Tests for the Place method for the ToyRobot class', () => {
       F: 'North',
     }
 
-    //Act
-    const RESULT = toyRobot.Place(POSITION);
-
     //Assert
-    expect(RESULT.valid).toBeFalsy();
-
+    expect(() => toyRobot.Place(POSITION)).toThrowError();
   });
 
-  test('Should return an object with valid set to false if invalid Y is passed', () => {
+  test('Should throw an error if invalid Y is passed', () => {
 
     //Arrange
     const toyRobot = new ToyRobot();
@@ -53,15 +49,12 @@ describe('Tests for the Place method for the ToyRobot class', () => {
       F: 'North',
     }
 
-    //Act
-    const RESULT = toyRobot.Place(POSITION);
-
     //Assert
-    expect(RESULT.valid).toBeFalsy();
+    expect(() => toyRobot.Place(POSITION)).toThrowError();
 
   });
 
-  test('Should return an object with valid set to false if invalid F is passed', () => {
+  test('Should throw error if invalid F is passed', () => {
 
     //Arrange
     const toyRobot = new ToyRobot();
@@ -71,11 +64,8 @@ describe('Tests for the Place method for the ToyRobot class', () => {
       F: 'Mouth',
     }
 
-    //Act
-    const RESULT = toyRobot.Place(POSITION);
-
     //Assert
-    expect(RESULT.valid).toBeFalsy();
+    expect(() => toyRobot.Place(POSITION)).toThrowError();
 
   });
 

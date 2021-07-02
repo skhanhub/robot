@@ -4,7 +4,7 @@ import ToyRobot, { ActionMap, ReturnPosition } from './toyRobot';
 
 const radix = 10;
 
-export default class RunCommands {
+export default class Orchestrator {
   toyRobot: ToyRobot;
   commands: string[];
   actionMap: ActionMap;
@@ -44,30 +44,33 @@ export default class RunCommands {
   */
   RunCommand = (command: string) =>{
 
-    // Split based on either space or comma
-    const temp = command.split(/[\s,]+/);
-    const action = temp[0];
-    const arg = temp.slice(1);
-    if(!this.actionMap[action.toLocaleLowerCase()]){
-      console.log(`${action} is not a valid command`)
-      return;
-    }
-    else if(this.print){
-      console.log(command)
-    }
-    if(action.toLocaleLowerCase() === 'place'){
-      if(arg.length !== 3)
-        console.log(`${action} takes 3 arguments, ${arg.length} is given`)
+    try {
+      // Split based on either space or comma
+      const temp = command.split(/[\s,]+/);
+      const action = temp[0];
+      const arg = temp.slice(1);
+      if(!this.actionMap[action.toLocaleLowerCase()]){
+        throw new Error(`${action} is not a valid command`);
+      }
+      else if(this.print){
+        console.log(command)
+      }
+      if(action.toLocaleLowerCase() === 'place'){
+        if(arg.length !== 3)
+          throw new Error(`${action} takes 3 arguments, ${arg.length} is given`);
+        else
+          this.actionMap[action.toLocaleLowerCase()]({X: parseInt(arg[0], radix), Y: parseInt(arg[1], radix), F: arg[2]})
+      }
+      else if(action.toLocaleLowerCase() === 'report'){
+        const RESULT = this.actionMap[action.toLocaleLowerCase()]()
+        if(RESULT.valid)
+          console.log(`X: ${RESULT.position.X} Y: ${RESULT.position.Y} F: ${RESULT.position.F}`)
+      }
       else
-        this.actionMap[action.toLocaleLowerCase()]({X: parseInt(arg[0], radix), Y: parseInt(arg[1], radix), F: arg[2]})
+        this.actionMap[action.toLocaleLowerCase()]()
+    } catch(err) {
+      console.error(err.message)
     }
-    else if(action.toLocaleLowerCase() === 'report'){
-      const RESULT = this.actionMap[action.toLocaleLowerCase()]()
-      if(RESULT.valid)
-        console.log(`X: ${RESULT.position.X} Y: ${RESULT.position.Y} F: ${RESULT.position.F}`)
-    }
-    else
-      this.actionMap[action.toLocaleLowerCase()]()
   }
  /*
   Method for running a list of commands
@@ -77,12 +80,12 @@ export default class RunCommands {
   RunCommands = (): ReturnPosition => {
     if(this.commands === []){
       console.log('No commands found')
-      return this.toyRobot.Report();
+      return this.toyRobot.GetPosition();
     }
     this.commands.forEach(command => {
       this.RunCommand(command);
     });
-    return this.toyRobot.Report()
+    return this.toyRobot.GetPosition()
   }
   // Method for toggling the print property
   togglePrint = () => this.print = !this.print;

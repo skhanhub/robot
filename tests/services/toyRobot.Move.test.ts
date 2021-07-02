@@ -1,4 +1,5 @@
 import ToyRobot from '../../src/services/toyRobot';
+import ToyRobotError from "../../src/services/toyRobotError";
 
 describe('Tests for the Move method for the ToyRobot class', () => {
 
@@ -57,7 +58,7 @@ describe('Tests for the Move method for the ToyRobot class', () => {
 
   });
 
-  test('Should return a valid flag set to fasle', () => {
+  test('Should throw error for invalid move', () => {
 
     //Arrange
     const POSITION = {
@@ -69,14 +70,13 @@ describe('Tests for the Move method for the ToyRobot class', () => {
 
     //Act
     toyRobot.Place(POSITION);
-    const RESULT = toyRobot.Move();
 
     //Assert
-    expect(RESULT.valid).toBeFalsy();
+    expect(() => toyRobot.Move()).toThrowError();
 
   });
 
-  test('Should return a valid flag set to fasle', () => {
+  test('Should throw error for invalid move', () => {
 
     //Arrange
     const POSITION = {
@@ -88,10 +88,9 @@ describe('Tests for the Move method for the ToyRobot class', () => {
 
     //Act
     toyRobot.Place(POSITION);
-    const RESULT = toyRobot.Move();
 
     //Assert
-    expect(RESULT.valid).toBeFalsy();
+    expect(() => toyRobot.Move()).toThrowError();
 
   });
 
