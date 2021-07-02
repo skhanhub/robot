@@ -18,7 +18,7 @@ export default class RunCommands {
   */
   FromFile = async (pathToCommandFile: string) => {
 
-    const ABSOLUTEPATH = join(__dirname, pathToCommandFile);
+    const ABSOLUTEPATH = join(__dirname, '../', pathToCommandFile);
     if (!existsSync(ABSOLUTEPATH)) {
       throw new Error(`${ABSOLUTEPATH} does not exist`)
     }
