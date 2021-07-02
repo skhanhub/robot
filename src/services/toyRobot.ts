@@ -21,13 +21,14 @@ export type  Position = {
   F: string,
 }
 
-export type ReturnPosition = {
+export type ToyRobotReturn = {
   valid: boolean,
-  position: Position
+  position: Position,
+  message?: string,
 }
 
 export type ActionMap = {
-  [key: string]: (...args: Position[]) => ReturnPosition
+  [key: string]: (...args: Position[]) => ToyRobotReturn
 }
 
 export const defaultPosition = {
@@ -81,7 +82,7 @@ export default class ToyRobot {
   The Method takes a position object
   The Method returns a ReturnPosition object
   */
-  Place = (position: Position = defaultPosition): ReturnPosition => {
+  Place = (position: Position = defaultPosition): ToyRobotReturn => {
 
     if(!this.Validate(position)){
       throw new ToyRobotError(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimension-1} and F is either North, South, East, West`, INVALID_POSITION);
@@ -98,7 +99,7 @@ export default class ToyRobot {
   The Method does not take any argument
   The Method returns a ReturnPosition object
   */
-  Move = (): ReturnPosition => {
+  Move = (): ToyRobotReturn => {
 
     if(!this.valid)
       return this.GetPosition();
@@ -120,7 +121,7 @@ export default class ToyRobot {
   The Method does not take any argument
   The Method returns a ReturnPosition object
   */
-  Left = (): ReturnPosition => {
+  Left = (): ToyRobotReturn => {
 
     if(!this.valid)
       return this.GetPosition();
@@ -134,7 +135,7 @@ export default class ToyRobot {
   The Method does not take any argument
   The Method returns a ReturnPosition object
   */
-  Right = (): ReturnPosition => {
+  Right = (): ToyRobotReturn => {
 
     if(!this.valid)
       return this.GetPosition();
@@ -148,10 +149,11 @@ export default class ToyRobot {
   The Method does not take any argument
   The Method returns a ReturnPosition object
   */
-  GetPosition = (): ReturnPosition => (
+  GetPosition = (): ToyRobotReturn => (
     {
       valid: this.valid,
       position: this.position,
+      message: `X: ${this.position.X} Y: ${this.position.Y} F: ${this.position.F}`
     }
   )
   /*
