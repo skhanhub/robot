@@ -34,6 +34,13 @@ export const defaultPosition = {
   F: 'North',
 }
 
+export const defaultDirectionLookUp = {
+  north: {X: 0, Y: 1, Left: 'West', Right: 'East'},
+  south: {X: 0, Y: -1, Left: 'East', Right: 'West'},
+  east: {X: 1, Y: 0, Left: 'North', Right: 'South'},
+  west: {X: -1, Y: 0, Left: 'South', Right: 'North'},
+}
+
 // Class for simulating a toy robot
 export default class ToyRobot {
   directionLookUp: LookUp;
@@ -42,12 +49,7 @@ export default class ToyRobot {
   dimention: number;
 
   constructor(
-    directionLookUp = {
-      north: {X: 0, Y: 1, Left: 'West', Right: 'East'},
-      south: {X: 0, Y: -1, Left: 'East', Right: 'West'},
-      east: {X: 1, Y: 0, Left: 'North', Right: 'South'},
-      west: {X: -1, Y: 0, Left: 'South', Right: 'North'},
-    },
+    directionLookUp = defaultDirectionLookUp,
     position = defaultPosition,
     valid = false,
     dimention = 5
