@@ -154,8 +154,6 @@ export default class ToyRobot {
       position: this.position,
     }
   )
-
-
   /*
   Method getting a hashmap with the keys being the action name and the values are the methods
   The Method does not take any argument
