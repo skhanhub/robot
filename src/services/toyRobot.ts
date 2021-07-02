@@ -34,6 +34,9 @@ export const defaultPosition = {
   F: 'North',
 }
 
+export const defaultValid = false;
+export const defaultDimention = 5;
+
 export const defaultDirectionLookUp = {
   north: {X: 0, Y: 1, Left: 'West', Right: 'East'},
   south: {X: 0, Y: -1, Left: 'East', Right: 'West'},
@@ -51,8 +54,8 @@ export default class ToyRobot {
   constructor(
     directionLookUp = defaultDirectionLookUp,
     position = defaultPosition,
-    valid = false,
-    dimention = 5
+    valid = defaultValid,
+    dimention = defaultDimention,
   ){
     this.directionLookUp = directionLookUp;
     this.position = position;
