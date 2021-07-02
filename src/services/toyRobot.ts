@@ -80,20 +80,14 @@ export default class ToyRobot {
 
     if(!this.Validate(position)){
       console.log(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimention-1} and F is either North, South, East, West`)
-      return{
-        valid: this.valid,
-        position: this.position,
-      };
+      return this.GetPosition();
     }
 
     position.F = position.F[0].toUpperCase()+position.F.slice(1).toLocaleLowerCase();
     this.position = position;
     this.valid = true
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
   /*
   Method for moving the robot
@@ -103,10 +97,7 @@ export default class ToyRobot {
   Move = (): ReturnPosition => {
 
     if(!this.valid)
-      return {
-        valid: this.valid,
-        position: this.position,
-      };
+      return this.GetPosition();
 
     const NEW_POSITION = {...this.position};
     NEW_POSITION.X = NEW_POSITION.X + this.directionLookUp[NEW_POSITION.F.toLocaleLowerCase()].X;
@@ -122,10 +113,7 @@ export default class ToyRobot {
 
     this.position = NEW_POSITION;
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
  /*
   Method for rotating the robot 90 degrees to the left (anticlockwise)
@@ -135,17 +123,11 @@ export default class ToyRobot {
   Left = (): ReturnPosition => {
 
     if(!this.valid)
-      return {
-        valid: this.valid,
-        position: this.position,
-      };
+      return this.GetPosition();
     // Look up the new face for a left rotation (F) from the lookup table
     this.position.F = this.directionLookUp[this.position.F.toLocaleLowerCase()].Left
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
   /*
   Method for rotating the robot 90 degrees to the right (clockwise)
@@ -155,29 +137,25 @@ export default class ToyRobot {
   Right = (): ReturnPosition => {
 
     if(!this.valid)
-      return {
-        valid: this.valid,
-        position: this.position,
-      };
+      return this.GetPosition();
     // Look up the new face for a right rotation (F) from the lookup table
     this.position.F = this.directionLookUp[this.position.F.toLocaleLowerCase()].Right
 
-    return {
-      valid: this.valid,
-      position: this.position,
-    };
+    return this.GetPosition();
   }
   /*
   Method getting the current position of the robot
   The Method does not take any argument
   The Method returns a ReturnPosition object
   */
-  Report = (): ReturnPosition => (
+  GetPosition = (): ReturnPosition => (
     {
       valid: this.valid,
       position: this.position,
     }
   )
+
+
   /*
   Method getting a hashmap with the keys being the action name and the values are the methods
   The Method does not take any argument
@@ -190,7 +168,7 @@ export default class ToyRobot {
       move: this.Move,
       left: this.Left,
       right: this.Right,
-      report: this.Report,
+      report: this.GetPosition,
     }
   }// End GetActionMap
 }// End Class
