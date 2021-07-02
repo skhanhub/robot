@@ -1,4 +1,6 @@
 // This file contains the ToyRobot class
+import ToyRobotError, { INVALID_MOVE, INVALID_POSITION } from "./toyRobotError"
+
 export type LookUpDetails = {
   X: number,
   Y: number,
@@ -82,8 +84,7 @@ export default class ToyRobot {
   Place = (position: Position = defaultPosition): ReturnPosition => {
 
     if(!this.Validate(position)){
-      console.log(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimention-1} and F is either North, South, East, West`)
-      return this.GetPosition();
+      throw new ToyRobotError(`Invalid position! Make sure both X and Y coordinates are between 0 and ${this.dimention-1} and F is either North, South, East, West`, INVALID_POSITION);
     }
 
     position.F = position.F[0].toUpperCase()+position.F.slice(1).toLocaleLowerCase();
@@ -107,11 +108,7 @@ export default class ToyRobot {
     NEW_POSITION.Y = NEW_POSITION.Y + this.directionLookUp[NEW_POSITION.F.toLocaleLowerCase()].Y;
 
     if(!this.Validate(NEW_POSITION)){
-      console.log(`The robot cannot move any further. Otherwise, it will fall off the table. Try a different direction.`)
-      return {
-        valid: false,
-        position: this.position,
-      };
+      throw new ToyRobotError(`The robot cannot move any further. Otherwise, it will fall off the table. Try a different direction.`, INVALID_MOVE);
     }
 
     this.position = NEW_POSITION;
