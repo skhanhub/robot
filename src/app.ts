@@ -1,7 +1,7 @@
 // This file contains the top level application
 import { join } from "path";
 import { existsSync } from 'fs';
-import RunCommands from './services/runCommands';
+import Orchestrator from './services/orchestrator';
 import configs from "../config";
 
 // Get file path from the arguments
@@ -19,7 +19,7 @@ Start by placing the robot using Place X, Y, F where X and Y is between 0 and 4 
 Enter q or quit to exit
 `;
 
-const runCommands = new RunCommands()
+const runCommands = new Orchestrator()
 console.log(`Welcome to the ${CONFIG.appName}`);
 
 /*

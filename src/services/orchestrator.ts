@@ -4,7 +4,7 @@ import ToyRobot, { ActionMap, ReturnPosition } from './toyRobot';
 
 const radix = 10;
 
-export default class RunCommands {
+export default class Orchestrator {
   toyRobot: ToyRobot;
   commands: string[];
   actionMap: ActionMap;

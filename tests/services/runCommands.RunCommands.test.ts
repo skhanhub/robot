@@ -1,4 +1,4 @@
-import RunCommands from '../../src/services/runCommands';
+import Orchestrator from '../../src/services/orchestrator';
 
 describe('Tests for the RunCommands method for the RunCommands class', () => {
 
@@ -13,7 +13,7 @@ describe('Tests for the RunCommands method for the RunCommands class', () => {
       'MOVE',
       'REPORT',
     ]
-    const runCommands = new RunCommands();
+    const runCommands = new Orchestrator();
     runCommands.SetCommands(COMMANDS);
 
     //Act
@@ -41,7 +41,7 @@ describe('Tests for the RunCommands method for the RunCommands class', () => {
       'MOVE',
       'REPORT',
     ]
-    const runCommands = new RunCommands();
+    const runCommands = new Orchestrator();
     runCommands.SetCommands(COMMANDS);
 
     //Act
@@ -69,7 +69,7 @@ describe('Tests for the RunCommands method for the RunCommands class', () => {
       'MOVE',
       'REPORT',
     ]
-    const runCommands = new RunCommands();
+    const runCommands = new Orchestrator();
     runCommands.SetCommands(COMMANDS);
 
     //Act
