@@ -1,6 +1,7 @@
 import { join } from "path";
 import { existsSync } from 'fs';
 import Orchestrator from "./orchestrator";
+import GetCommands from "./getCommands";
 
 const VALID_EXIT_COMMANDS = ['exit', 'e', 'quit', 'q'];
 
@@ -23,7 +24,8 @@ export default class RunCommands {
     }
     // Switch on additional logging
     this.orchestrator.togglePrint();
-    await this.orchestrator.GetCommandsFromFile(ABSOLUTEPATH)
+    const commands = await GetCommands.FromFile(ABSOLUTEPATH)
+    this.orchestrator.SetCommands(commands);
     this.orchestrator.RunCommands();
   }
   /*
