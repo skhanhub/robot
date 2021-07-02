@@ -1,6 +1,6 @@
 // This file contains the runCommands class
 import { promises } from 'fs';
-import ToyRobot, { ActionMap, ReturnPosition } from './toyRobot';
+import ToyRobot, { ActionMap, ToyRobotReturn } from './toyRobot';
 
 const radix = 10;
 
@@ -26,7 +26,7 @@ export default class Orchestrator {
   */
   GetCommandsFromFile = async (path: string): Promise<string[]> => {
 
-    console.log(`Reading commands from ${path}`)
+    console.info(`Reading commands from ${path}`)
     const data: string = await promises.readFile(path, 'utf8');
 
     if (!data){
@@ -53,7 +53,7 @@ export default class Orchestrator {
         throw new Error(`${action} is not a valid command`);
       }
       else if(this.print){
-        console.log(command)
+        console.info(command)
       }
       if(action.toLocaleLowerCase() === 'place'){
         if(arg.length !== 3)
@@ -61,13 +61,11 @@ export default class Orchestrator {
         else
           this.actionMap[action.toLocaleLowerCase()]({X: parseInt(arg[0], radix), Y: parseInt(arg[1], radix), F: arg[2]})
       }
-      else if(action.toLocaleLowerCase() === 'report'){
-        const RESULT = this.actionMap[action.toLocaleLowerCase()]()
-        if(RESULT.valid)
-          console.log(`X: ${RESULT.position.X} Y: ${RESULT.position.Y} F: ${RESULT.position.F}`)
+      else{
+        const result = this.actionMap[action.toLocaleLowerCase()]()
+        if(result.message && result.valid)
+          console.info(result.message)
       }
-      else
-        this.actionMap[action.toLocaleLowerCase()]()
     } catch(err) {
       console.error(err.message)
     }
@@ -77,10 +75,9 @@ export default class Orchestrator {
   The Method does not take any arguments
   The Method returns the final position of the robot as a ReturnPosition object
   */
-  RunCommands = (): ReturnPosition => {
+  RunCommands = (): ToyRobotReturn => {
     if(this.commands === []){
-      console.log('No commands found')
-      return this.toyRobot.GetPosition();
+      throw new Error('No commands found')
     }
     this.commands.forEach(command => {
       this.RunCommand(command);
