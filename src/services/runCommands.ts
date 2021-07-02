@@ -77,12 +77,12 @@ export default class RunCommands {
   RunCommands = (): ReturnPosition => {
     if(this.commands === []){
       console.log('No commands found')
-      return this.toyRobot.Report();
+      return this.toyRobot.GetPosition();
     }
     this.commands.forEach(command => {
       this.RunCommand(command);
     });
-    return this.toyRobot.Report()
+    return this.toyRobot.GetPosition()
   }
   // Method for toggling the print property
   togglePrint = () => this.print = !this.print;
