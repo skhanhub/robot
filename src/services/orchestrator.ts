@@ -41,10 +41,9 @@ export default class Orchestrator {
           throw new Error(`${action} takes 3 arguments, ${arg.length} is given`);
         else
           this.actionMap[action.toLocaleLowerCase()]({X: parseInt(arg[0], radix), Y: parseInt(arg[1], radix), F: arg[2]})
-      }
-      else{
+      } else {
         const result = this.actionMap[action.toLocaleLowerCase()]()
-        if(result.message && result.valid)
+        if(result.message)
           console.info(result.message)
       }
     } catch(err) {

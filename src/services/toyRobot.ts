@@ -153,7 +153,7 @@ export default class ToyRobot {
     {
       valid: this.valid,
       position: this.position,
-      message: `X: ${this.position.X} Y: ${this.position.Y} F: ${this.position.F}`
+      message: this.valid ? `X: ${this.position.X} Y: ${this.position.Y} F: ${this.position.F}` : undefined,
     }
   )
   /*
