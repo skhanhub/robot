@@ -72,9 +72,10 @@ export default class ToyRobot {
   */
   private Validate = (position: Position): boolean =>{
 
-    return position.X <= this.dimension - 1 && position.X >= 0 &&
-      position.Y <= this.dimension - 1 && position.Y >= 0 &&
-      this.directionLookUp[position.F.toLocaleLowerCase()] !== undefined
+    const {X, Y, F} = position;
+    return X <= this.dimension - 1 && X >= 0 &&
+      Y <= this.dimension - 1 && Y >= 0 &&
+      this.directionLookUp[F.toLocaleLowerCase()] !== undefined
   }
 
   /*
